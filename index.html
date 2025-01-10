@@ -49,7 +49,7 @@
         const rightLimit = (mid + tolerance) % 360;
         const behind = (mid + 180) % 360;
 
-        console.log(leftLimit, rightLimit, behind);
+        // console.log(leftLimit, rightLimit, behind);
 
         let condition;
         if (leftLimit > rightLimit) {
@@ -62,15 +62,25 @@
 }`;
         }
 
+        let condition2;
+        if (rightLimit < behind) {
+          condition2 = `else if ((mag > rightLimit) && (mag < Behind)) {
+    // Arah kanan
+}`;
+        } else {
+          condition2 = `else if ((mag > rightLimit) || (mag < Behind)) {
+    // Arah kanan
+}`;
+        }
+
         const functionCode = `int mid = ${mid};
 int leftLimit = (mid - ${tolerance} + 360) % 360; // Batas awal arah lurus
 int rightLimit = (mid + ${tolerance}) % 360;     // Batas akhir arah lurus
-int Behind = (mid + 180) % 360;                 // Batas akhir arah kanan
+int Behind = (mid + 180) % 360;        // Batas akhir arah kanan
 
 ${condition}
-else if ((mag > rightLimit) && (mag < Behind)) {
-    // Arah kanan
-} else {
+${condition2}
+else {
     // Arah kiri
 }`;
 
